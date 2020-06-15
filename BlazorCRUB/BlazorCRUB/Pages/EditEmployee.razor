@@ -45,7 +45,13 @@
 </form>
 
 @code {
+    [Parameter]
+    public string CurrentId { get; set; }
     EmployeeInfo objEmp = new EmployeeInfo();
+    protected override async Task OnInitializedAsync()
+    {
+        objEmp = await Task.Run(() => objEmpService.GetEmployeeById(Convert.ToInt32(CurrentId)));
+    }
     protected void UpdateEmployee()
     {
         objEmpService.UpdateEmployee(objEmp);
